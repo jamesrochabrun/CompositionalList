@@ -15,7 +15,6 @@ public extension CollectionReusable where Self: UITableViewCell  {
     }
 }
 
-
 /// MARK:- UICollectionView
 public extension CollectionReusable where Self: UICollectionViewCell {
     static var reuseIdentifier: String {
