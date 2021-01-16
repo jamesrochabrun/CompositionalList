@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
-
+/// Continue here!
 @main
 struct CompositionalListExampleApp: App {
     var body: some Scene {
 
         WindowGroup {
-            ContentView()
+            ContentViewWrapper<ContentView>()
         }
     }
 }

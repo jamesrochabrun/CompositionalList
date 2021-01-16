@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B0997D225AEA7B4004E3DEE /* FeedGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997D125AEA7B4004E3DEE /* FeedGenerator.swift */; };
+		7B0997DA25AEB7B9004E3DEE /* CombineAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997D925AEB7B9004E3DEE /* CombineAPI.swift */; };
+		7B0997DF25AEB8AC004E3DEE /* ItunesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997DE25AEB8AC004E3DEE /* ItunesClient.swift */; };
+		7B0997E425AEBBA2004E3DEE /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997E325AEBBA2004E3DEE /* FeedItem.swift */; };
+		7B0997EC25AEBC92004E3DEE /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997EB25AEBC92004E3DEE /* Feed.swift */; };
+		7B0997F425AEC20D004E3DEE /* ItunesRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997F325AEC20D004E3DEE /* ItunesRemote.swift */; };
+		7B0997FA25AEC7C2004E3DEE /* ArtWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997F925AEC7C2004E3DEE /* ArtWork.swift */; };
 		7B1DD11625ACD0CB00897A98 /* CompositionalListExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DD11525ACD0CB00897A98 /* CompositionalListExampleApp.swift */; };
 		7B1DD11825ACD0CB00897A98 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DD11725ACD0CB00897A98 /* ContentView.swift */; };
 		7B1DD11A25ACD0CD00897A98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B1DD11925ACD0CD00897A98 /* Assets.xcassets */; };
@@ -39,6 +46,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7B0997D125AEA7B4004E3DEE /* FeedGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedGenerator.swift; sourceTree = "<group>"; };
+		7B0997D925AEB7B9004E3DEE /* CombineAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineAPI.swift; sourceTree = "<group>"; };
+		7B0997DE25AEB8AC004E3DEE /* ItunesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesClient.swift; sourceTree = "<group>"; };
+		7B0997E325AEBBA2004E3DEE /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
+		7B0997EB25AEBC92004E3DEE /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		7B0997F325AEC20D004E3DEE /* ItunesRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesRemote.swift; sourceTree = "<group>"; };
+		7B0997F925AEC7C2004E3DEE /* ArtWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtWork.swift; sourceTree = "<group>"; };
 		7B1DD11225ACD0CB00897A98 /* CompositionalListExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompositionalListExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B1DD11525ACD0CB00897A98 /* CompositionalListExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalListExampleApp.swift; sourceTree = "<group>"; };
 		7B1DD11725ACD0CB00897A98 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,6 +98,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B0997CA25AEA734004E3DEE /* Itunes */ = {
+			isa = PBXGroup;
+			children = (
+				7B0997F825AEC7AD004E3DEE /* Views */,
+				7B0997CF25AEA772004E3DEE /* Models */,
+				7B0997CE25AEA75B004E3DEE /* Networking */,
+			);
+			path = Itunes;
+			sourceTree = "<group>";
+		};
+		7B0997CE25AEA75B004E3DEE /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				7B0997D125AEA7B4004E3DEE /* FeedGenerator.swift */,
+				7B0997D925AEB7B9004E3DEE /* CombineAPI.swift */,
+				7B0997DE25AEB8AC004E3DEE /* ItunesClient.swift */,
+				7B0997F325AEC20D004E3DEE /* ItunesRemote.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		7B0997CF25AEA772004E3DEE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7B0997D025AEA777004E3DEE /* Apps */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7B0997D025AEA777004E3DEE /* Apps */ = {
+			isa = PBXGroup;
+			children = (
+				7B0997E325AEBBA2004E3DEE /* FeedItem.swift */,
+				7B0997EB25AEBC92004E3DEE /* Feed.swift */,
+			);
+			path = Apps;
+			sourceTree = "<group>";
+		};
+		7B0997F825AEC7AD004E3DEE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7B0997F925AEC7C2004E3DEE /* ArtWork.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		7B1DD10925ACD0CB00897A98 = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +167,7 @@
 		7B1DD11425ACD0CB00897A98 /* CompositionalListExample */ = {
 			isa = PBXGroup;
 			children = (
+				7B0997CA25AEA734004E3DEE /* Itunes */,
 				7B1DD1DE25AD5CD800897A98 /* Marvel */,
 				7B1DD11525ACD0CB00897A98 /* CompositionalListExampleApp.swift */,
 				7B1DD11725ACD0CB00897A98 /* ContentView.swift */,
@@ -292,10 +353,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B0997E425AEBBA2004E3DEE /* FeedItem.swift in Sources */,
+				7B0997EC25AEBC92004E3DEE /* Feed.swift in Sources */,
+				7B0997F425AEC20D004E3DEE /* ItunesRemote.swift in Sources */,
+				7B0997DA25AEB7B9004E3DEE /* CombineAPI.swift in Sources */,
 				7B1DD1E025AD5CF600897A98 /* MarvelProvider.swift in Sources */,
 				7B1DD1F325AD62D600897A98 /* ActivityIndicator.swift in Sources */,
 				7B1DD11825ACD0CB00897A98 /* ContentView.swift in Sources */,
+				7B0997DF25AEB8AC004E3DEE /* ItunesClient.swift in Sources */,
+				7B0997D225AEA7B4004E3DEE /* FeedGenerator.swift in Sources */,
 				7B1DD11625ACD0CB00897A98 /* CompositionalListExampleApp.swift in Sources */,
+				7B0997FA25AEC7C2004E3DEE /* ArtWork.swift in Sources */,
 				7B1DD1E825AD5E5700897A98 /* CarachterArtworkView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
