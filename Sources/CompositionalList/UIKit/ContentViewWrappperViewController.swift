@@ -18,6 +18,7 @@ final public class ContentViewWrappperViewController<Content: Parent>: UIViewCon
         hostingController.rootView = conView
         addChild(hostingController)
         view.addSubview(hostingController.view)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
             hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),

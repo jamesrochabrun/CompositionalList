@@ -16,6 +16,9 @@ public protocol Parent: View {
 
 public struct ContentViewWrapper<Content: Parent>: UIViewRepresentable {
         
+    public init() {
+    }
+    
     public func makeUIView(context: Context) -> UIView {
         ContentViewWrappperViewController<Content>().view
     }
