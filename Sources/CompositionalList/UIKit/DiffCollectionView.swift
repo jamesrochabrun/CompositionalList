@@ -18,6 +18,12 @@ public protocol SectionIdentifierViewModel {
     var cellIdentifiers: [CellIdentifier] { get }
 }
 
+/// Helper
+public struct GenericSectionIdentifierViewModel<SectionIdentifier: Hashable, CellIdentifier: Hashable>: SectionIdentifierViewModel {
+    public var sectionIdentifier: SectionIdentifier? = nil
+    public var cellIdentifiers: [CellIdentifier]
+}
+
 @available(iOS 13, *)
 public final class DiffCollectionView<ViewModel: SectionIdentifierViewModel,
                                       RowView: View,

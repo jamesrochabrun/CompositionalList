@@ -10,11 +10,11 @@ import SwiftUI
 
 /// UICollectionviewCell abstraction that hosts a SwfitUI `View`
 @available(iOS 13.0, *)
-final class WrapperViewCell<V: View>: BaseCollectionViewCell<V> {
+final public class WrapperViewCell<V: View>: BaseCollectionViewCell<V> {
     
     private var hostView: HostView<V>?
 
-    override func setupWith(_ viewModel: V, parent: UIViewController?) {
+    public override func setupWith(_ viewModel: V, parent: UIViewController?) {
         hostView = HostView<V>(parent: parent, view: viewModel)
         guard let hostView = hostView else { return }
         contentView.addSubview(hostView)
@@ -27,7 +27,7 @@ final class WrapperViewCell<V: View>: BaseCollectionViewCell<V> {
         ])
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
         hostView?.removeFromSuperview()
         hostView = nil
