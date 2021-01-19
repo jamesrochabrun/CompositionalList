@@ -7,6 +7,12 @@
 
 import Foundation
 import Combine
+import CompositionalList
+
+struct GenericSectionIdentifierViewModel<SectionIdentifier: Hashable, CellIdentifier: Hashable>: SectionIdentifierViewModel {
+    var sectionIdentifier: SectionIdentifier? = nil
+    var cellIdentifiers: [CellIdentifier]
+}
 
 // Step 1: create a section identifier
 enum SectionIdentifierExample: String, CaseIterable {
@@ -16,7 +22,6 @@ enum SectionIdentifierExample: String, CaseIterable {
     case recent = "Recent"
     case comingSoon = "Coming Soon"
 }
-
 
 final class ItunesRemote: ObservableObject {
 
@@ -29,8 +34,8 @@ final class ItunesRemote: ObservableObject {
         cancellable = service.fetch(Feed<ItunesResources<FeedItem>>.self, mediaType: mediaType).sink(receiveCompletion: {
             dump($0)
         }, receiveValue: { feed in
-            
-            let chunks = feed.feed.results.map { FeedItemViewModel(model: $0) }.chunked(into: SectionIdentifierExample.allCases.count)
+            let chunkCount = feed.feed.results.count / SectionIdentifierExample.allCases.count
+            let chunks = feed.feed.results.map { FeedItemViewModel(model: $0) }.chunked(into: chunkCount)
             var sectionIdentifiers: [GenericSectionIdentifierViewModel<SectionIdentifierExample, FeedItemViewModel>] = []
             for i in 0..<SectionIdentifierExample.allCases.count {
                 sectionIdentifiers.append(GenericSectionIdentifierViewModel(sectionIdentifier: SectionIdentifierExample.allCases[i], cellIdentifiers: chunks[i]))
@@ -40,7 +45,8 @@ final class ItunesRemote: ObservableObject {
     }
 }
 
-
+// Helper, currenlt Itunes RSS feed does not return sectioned data, in order to
+// show how compositional list works with sections we chunked the available data from the Itunes API.
 extension Array {
     func chunked(into size: Int) -> [[Element]] {
         return stride(from: 0, to: count, by: size).map {

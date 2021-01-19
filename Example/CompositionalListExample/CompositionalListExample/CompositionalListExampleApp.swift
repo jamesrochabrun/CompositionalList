@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-/// Continue here!
+import CompositionalList
+
 @main
 struct CompositionalListExampleApp: App {
     var body: some Scene {

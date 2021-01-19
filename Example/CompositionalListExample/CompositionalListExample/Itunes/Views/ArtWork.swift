@@ -8,10 +8,6 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-protocol ArtworkURL {
-    var artworkURL: URL { get }
-}
-
 struct ArtWork: View {
     
         @ObservedObject var artworkViewModel: FeedItemViewModel
@@ -33,7 +29,7 @@ struct ArtWork: View {
                 .transition(.fade(duration: 0.5)) // Fade Transition with duration
                .frame(maxWidth: .infinity, maxHeight: .infinity)
                // .frame(idealWidth: 100, idealHeight: 100)
-                .scaledToFill()
+             //   .scaledToFill()
         }
 }
 
@@ -45,6 +41,7 @@ struct TileInfo: View {
  
         VStack(alignment: .leading) {
              ArtWork(artworkViewModel: artworkViewModel)
+              //  .scaledToFill()
             //Rectangle()
               //  .aspectRatio(1, contentMode: .fill)
                 // .aspectRatio(CGSize(width: 100, height: 100), contentMode: .fill)
@@ -64,12 +61,6 @@ struct ListItem: View {
     @ObservedObject var artworkViewModel: FeedItemViewModel
     
     var body: some View {
-//        Rectangle()
-//            .foregroundColor(.red)
-//            .frame(maxWidth: .infinity, maxHeight: .infinity)
-//
-//            .clipped()
-
         HStack(spacing: 8) {
             ArtWork(artworkViewModel: artworkViewModel)
                 .frame(width: 40, height: 40)
@@ -78,7 +69,7 @@ struct ListItem: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(artworkViewModel.artistName ?? artworkViewModel.name)
                     .modifier(PrimaryFootNote())
-                Text(artworkViewModel.genres.first?.name ?? "blob")
+                Text(artworkViewModel.genres.first?.name ?? "")
                     .modifier(SecondaryFootNote())
             }
             Spacer()

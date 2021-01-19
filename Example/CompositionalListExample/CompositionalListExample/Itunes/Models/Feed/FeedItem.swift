@@ -43,7 +43,7 @@ class GenreViewModel: ObservableObject {
     }
 }
 
-class FeedItemViewModel: IdentifiableHashable, ArtworkURL, ObservableObject {
+class FeedItemViewModel: IdentifiableHashable, ObservableObject {
     
     @Published public var artistName: String?
     @Published public var id: String
