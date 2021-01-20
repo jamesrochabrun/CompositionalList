@@ -40,9 +40,9 @@ final class ItunesRemote: ObservableObject {
             for i in 0..<SectionIdentifierExample.allCases.count {
                 sectionIdentifiers.append(GenericSectionIdentifierViewModel(sectionIdentifier: SectionIdentifierExample.allCases[i], cellIdentifiers: chunks[i]))
             }
-            self.feedItems = []
+            print("the kind old kind ItunesRemote \(String(describing: (self.feedItems.first?.cellIdentifiers.first)?.kind))")
             self.feedItems = sectionIdentifiers
-            print("the new kind ItunesRemote \((sectionIdentifiers.first?.cellIdentifiers.first as? FeedItemViewModel)?.kind)")
+            print("the kind new kind ItunesRemote \(String(describing: (sectionIdentifiers.first?.cellIdentifiers.first)?.kind))")
          })
     }
 }

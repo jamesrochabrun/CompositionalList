@@ -16,6 +16,7 @@
 		7B0997F425AEC20D004E3DEE /* ItunesRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997F325AEC20D004E3DEE /* ItunesRemote.swift */; };
 		7B0997FA25AEC7C2004E3DEE /* ArtWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997F925AEC7C2004E3DEE /* ArtWork.swift */; };
 		7B0AB27825B7A1D20079F06E /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AB27725B7A1D20079F06E /* CollectionView.swift */; };
+		7B0AB28025B8F0100079F06E /* ItunesFeedItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AB27F25B8F0100079F06E /* ItunesFeedItemDetailView.swift */; };
 		7B1DD11625ACD0CB00897A98 /* CompositionalListExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DD11525ACD0CB00897A98 /* CompositionalListExampleApp.swift */; };
 		7B1DD11825ACD0CB00897A98 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DD11725ACD0CB00897A98 /* ContentView.swift */; };
 		7B1DD11A25ACD0CD00897A98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B1DD11925ACD0CD00897A98 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 		7B0997F325AEC20D004E3DEE /* ItunesRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesRemote.swift; sourceTree = "<group>"; };
 		7B0997F925AEC7C2004E3DEE /* ArtWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtWork.swift; sourceTree = "<group>"; };
 		7B0AB27725B7A1D20079F06E /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		7B0AB27F25B8F0100079F06E /* ItunesFeedItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesFeedItemDetailView.swift; sourceTree = "<group>"; };
 		7B1DD11225ACD0CB00897A98 /* CompositionalListExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompositionalListExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B1DD11525ACD0CB00897A98 /* CompositionalListExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalListExampleApp.swift; sourceTree = "<group>"; };
 		7B1DD11725ACD0CB00897A98 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				7B0997F925AEC7C2004E3DEE /* ArtWork.swift */,
+				7B0AB27F25B8F0100079F06E /* ItunesFeedItemDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				7B0997F425AEC20D004E3DEE /* ItunesRemote.swift in Sources */,
 				7B0997DA25AEB7B9004E3DEE /* CombineAPI.swift in Sources */,
 				7B1DD1E025AD5CF600897A98 /* MarvelProvider.swift in Sources */,
+				7B0AB28025B8F0100079F06E /* ItunesFeedItemDetailView.swift in Sources */,
 				7B1DD1F325AD62D600897A98 /* ActivityIndicator.swift in Sources */,
 				7B1DD11825ACD0CB00897A98 /* ContentView.swift in Sources */,
 				7B0997DF25AEB8AC004E3DEE /* ItunesClient.swift in Sources */,

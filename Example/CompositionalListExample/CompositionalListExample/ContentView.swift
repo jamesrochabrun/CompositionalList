@@ -8,6 +8,64 @@
 import SwiftUI
 import CompositionalList
 
+struct Colle: View {
+    
+    @ObservedObject private var remote = ItunesRemote()
+
+    var body: some View {
+        VStack {
+            ScrollView (.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(SectionIdentifierExample.allCases, id: \.self) { app in
+                        Text(app.rawValue)
+                            .onTapGesture {
+                                switch app {
+                                case .comingSoon:
+                                    remote.fetchItems(.apps(feedType: .topFree(genre: .all), limit: 200))
+                                case .new:
+                                    remote.fetchItems(.tvShows(feedType: .topTVSeasons(genre: .all), limit: 100))
+                                default:
+                                    remote.fetchItems(.books(feedType: .topFree(genre: .all), limit: 100))
+                                }
+                            }
+                        Divider()
+                    }
+                }
+                HStack {
+                    List(remote.feedItems.first?.cellIdentifiers ?? [], id: \.id) { app in
+                        Text(app.kind)
+                        Divider()
+                    }
+                }
+            }.frame(height: 100)
+        }
+        NavigationView {
+            if remote.feedItems.isEmpty {
+                ActivityIndicator()
+            } else {
+                CollectionView(layout: .composed(), items: remote.feedItems) { indexPath, model in
+                    NavigationLink(destination: ItunesFeedItemDetailView(viewModel: model)) {
+                        Group {
+                            switch indexPath.section {
+                            case 0, 2, 3:
+                                TileInfo(artworkViewModel: model)
+                            case 1:
+                                ListItem(artworkViewModel: model)
+                            default:
+                                ArtWork(artworkViewModel: model)
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+        .onAppear() {
+            remote.fetchItems(.apps(feedType: .topFree(genre: .all), limit: 200))
+        }
+    }
+}
+
 struct ContentView: View {
 
     @ObservedObject private var remote = ItunesRemote()
@@ -97,12 +155,11 @@ public struct CompositionalList1<ViewModel: SectionIdentifierViewModel,
 
     var itemsPerSection: [ViewModel]
     let cellProvider: Diff.CellProvider
-    
+
     private (set)var headerProvider: Diff.HeaderFooterProvider? = nil
     
     public init(_ items: [ViewModel],
          @ViewBuilder cellProvider: @escaping Diff.CellProvider) {
-        print("the new kind on init is \((items.first?.cellIdentifiers.first as? FeedItemViewModel)?.kind)")
         self.cellProvider = cellProvider
         self.itemsPerSection = items
     }
@@ -111,7 +168,7 @@ public struct CompositionalList1<ViewModel: SectionIdentifierViewModel,
         Coordinator(self)
     }
     
-    public final class Coordinator: NSObject {
+    public final class Coordinator: NSObject, UICollectionViewDelegate {
     
         fileprivate let list: CompositionalList1
         fileprivate var itemsPerSection: [ViewModel]
@@ -128,6 +185,12 @@ public struct CompositionalList1<ViewModel: SectionIdentifierViewModel,
             self.headerProvider = list.headerProvider
             self.itemsPerSection = list.itemsPerSection
         }
+        
+        // Not used but kept for testing purposes
+        public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            let sectionIdentifier = itemsPerSection[indexPath.section]
+            let _ = sectionIdentifier.cellIdentifiers[indexPath.item]
+        }
     }
 }
 
@@ -136,6 +199,7 @@ extension CompositionalList1: UIViewControllerRepresentable {
     
     public func makeUIViewController(context: Context) -> Diff {
         Diff(layout: context.coordinator.layout,
+             collectionViewDelegate: context.coordinator,
              context.coordinator.cellProvider,
              context.coordinator.headerProvider)
     }
@@ -188,7 +252,7 @@ public protocol SectionIdentifierViewModel {
 @available(iOS 13, *)
 public final class DiffCollectionView1<ViewModel: SectionIdentifierViewModel,
                                      RowView: View,
-                                     HeaderFooterView: View>: UIViewController, UICollectionViewDelegate {
+                                     HeaderFooterView: View>: UIViewController {
    
    // MARK:- Private
    private (set)var collectionView: UICollectionView! // if not initilaized, lets crash. 🤷🏽‍♂️
@@ -205,6 +269,7 @@ public final class DiffCollectionView1<ViewModel: SectionIdentifierViewModel,
    
     // MARK:- Life Cycle
     convenience init(layout: UICollectionViewLayout,
+                     collectionViewDelegate: UICollectionViewDelegate,
                      @ViewBuilder _ cellProvider: @escaping CellProvider,
                      _ headerFooterProvider: HeaderFooterProvider?) {
         self.init()
@@ -213,7 +278,7 @@ public final class DiffCollectionView1<ViewModel: SectionIdentifierViewModel,
         collectionView.register(WrapperViewCell<RowView>.self)
         collectionView.registerHeader(WrapperCollectionReusableView<HeaderFooterView>.self, kind: UICollectionView.elementKindSectionHeader)
         collectionView.registerHeader(WrapperCollectionReusableView<HeaderFooterView>.self, kind: UICollectionView.elementKindSectionFooter)
-        collectionView.delegate = self
+        collectionView.delegate = collectionViewDelegate
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -222,7 +287,6 @@ public final class DiffCollectionView1<ViewModel: SectionIdentifierViewModel,
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        collectionView.collectionViewLayout = layout
         configureDataSource(cellProvider)
         if let headerFooterProvider = headerFooterProvider {
             assignHedearFooter(headerFooterProvider)
@@ -242,8 +306,6 @@ public final class DiffCollectionView1<ViewModel: SectionIdentifierViewModel,
    
    // MARK:- ViewModel injection and snapshot
    public func applySnapshotWith(_ itemsPerSection: [ViewModel]) {
-    
-    print("the new kind applySnapshotWith \((itemsPerSection.first?.cellIdentifiers.first as? FeedItemViewModel)?.kind)")
        currentSnapshot = Snapshot()
        guard var currentSnapshot = currentSnapshot else { return }
        currentSnapshot.appendSections(itemsPerSection.map { $0.sectionIdentifier })
@@ -261,12 +323,6 @@ public final class DiffCollectionView1<ViewModel: SectionIdentifierViewModel,
            }
            return header
        }
-   }
-   
-   // MARK:- UICollectionViewDelegate
-   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       guard let viewModel = dataSource?.itemIdentifier(for: indexPath) else { return }
-       selectedContentAtIndexPath?(viewModel, indexPath)
    }
 }
 
