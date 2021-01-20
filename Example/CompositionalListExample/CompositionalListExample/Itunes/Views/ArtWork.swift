@@ -47,7 +47,7 @@ struct TileInfo: View {
                 // .aspectRatio(CGSize(width: 100, height: 100), contentMode: .fill)
                 .cornerRadius(5.0)
             VStack(alignment: .leading, spacing: 3) {
-                Text(artworkViewModel.artistName ?? artworkViewModel.name)
+                Text(artworkViewModel.kind ?? artworkViewModel.name)
                     .modifier(PrimaryFootNote())
                 Text(artworkViewModel.genres.first?.name ?? "blob")
                     .modifier(SecondaryFootNote())

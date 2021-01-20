@@ -15,6 +15,7 @@
 		7B0997EC25AEBC92004E3DEE /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997EB25AEBC92004E3DEE /* Feed.swift */; };
 		7B0997F425AEC20D004E3DEE /* ItunesRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997F325AEC20D004E3DEE /* ItunesRemote.swift */; };
 		7B0997FA25AEC7C2004E3DEE /* ArtWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0997F925AEC7C2004E3DEE /* ArtWork.swift */; };
+		7B0AB27825B7A1D20079F06E /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AB27725B7A1D20079F06E /* CollectionView.swift */; };
 		7B1DD11625ACD0CB00897A98 /* CompositionalListExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DD11525ACD0CB00897A98 /* CompositionalListExampleApp.swift */; };
 		7B1DD11825ACD0CB00897A98 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DD11725ACD0CB00897A98 /* ContentView.swift */; };
 		7B1DD11A25ACD0CD00897A98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B1DD11925ACD0CD00897A98 /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 		7B0997EB25AEBC92004E3DEE /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		7B0997F325AEC20D004E3DEE /* ItunesRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesRemote.swift; sourceTree = "<group>"; };
 		7B0997F925AEC7C2004E3DEE /* ArtWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtWork.swift; sourceTree = "<group>"; };
+		7B0AB27725B7A1D20079F06E /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		7B1DD11225ACD0CB00897A98 /* CompositionalListExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompositionalListExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B1DD11525ACD0CB00897A98 /* CompositionalListExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalListExampleApp.swift; sourceTree = "<group>"; };
 		7B1DD11725ACD0CB00897A98 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 		7B0128F625B65F160040B70B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				7B0AB27625B7A1BB0079F06E /* SomeStuff */,
 				7B0128F725B65F1F0040B70B /* CustomLayout.swift */,
 			);
 			path = Helpers;
@@ -152,6 +155,14 @@
 				7B0997F925AEC7C2004E3DEE /* ArtWork.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7B0AB27625B7A1BB0079F06E /* SomeStuff */ = {
+			isa = PBXGroup;
+			children = (
+				7B0AB27725B7A1D20079F06E /* CollectionView.swift */,
+			);
+			path = SomeStuff;
 			sourceTree = "<group>";
 		};
 		7B1DD10925ACD0CB00897A98 = {
@@ -366,6 +377,7 @@
 			files = (
 				7B0997E425AEBBA2004E3DEE /* FeedItem.swift in Sources */,
 				7B0997EC25AEBC92004E3DEE /* Feed.swift in Sources */,
+				7B0AB27825B7A1D20079F06E /* CollectionView.swift in Sources */,
 				7B0997F425AEC20D004E3DEE /* ItunesRemote.swift in Sources */,
 				7B0997DA25AEB7B9004E3DEE /* CombineAPI.swift in Sources */,
 				7B1DD1E025AD5CF600897A98 /* MarvelProvider.swift in Sources */,

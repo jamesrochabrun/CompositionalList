@@ -10,10 +10,10 @@ import CompositionalList
 
 @main
 struct CompositionalListExampleApp: App {
+    
     var body: some Scene {
-
         WindowGroup {
-            ContentViewWrapper<ContentView>()
+            ContentView()
         }
     }
 }
