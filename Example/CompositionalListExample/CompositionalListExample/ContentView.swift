@@ -69,38 +69,44 @@ struct Colle: View {
 struct ContentView: View {
 
     @ObservedObject private var remote = ItunesRemote()
+    @State var selectedItem: FeedItemViewModel?
     
     var body: some View {
-        VStack {
-            ScrollView (.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(SectionIdentifierExample.allCases, id: \.self) { app in
-                        Text(app.rawValue)
-                            .onTapGesture {
-                                switch app {
-                                case .comingSoon:
-                                    remote.fetchItems(.apps(feedType: .topFree(genre: .all), limit: 200))
-                                case .new:
-                                    remote.fetchItems(.tvShows(feedType: .topTVSeasons(genre: .all), limit: 100))
-                                default:
-                                    remote.fetchItems(.books(feedType: .topFree(genre: .all), limit: 100))
-                                }
-                            }
-                        Divider()
-                    }
-                }
-                HStack {
-                    List(remote.feedItems.first?.cellIdentifiers ?? [], id: \.id) { app in
-                        Text(app.kind)
-                        Divider()
-                    }
-                }
-            }.frame(height: 100)
-        }
+//        VStack {
+//            ScrollView (.horizontal, showsIndicators: false) {
+//                HStack {
+//                    ForEach(SectionIdentifierExample.allCases, id: \.self) { app in
+//                        Text(app.rawValue)
+//                            .onTapGesture {
+//                                switch app {
+//                                case .comingSoon:
+//                                    remote.fetchItems(.apps(feedType: .topFree(genre: .all), limit: 200))
+//                                case .new:
+//                                    remote.fetchItems(.tvShows(feedType: .topTVSeasons(genre: .all), limit: 100))
+//                                default:
+//                                    remote.fetchItems(.books(feedType: .topFree(genre: .all), limit: 100))
+//                                }
+//                            }
+//                        Divider()
+//                    }
+//                }
+//                HStack {
+//                    List(remote.feedItems.first?.cellIdentifiers ?? [], id: \.id) { app in
+//                        Text(app.kind)
+//                        Divider()
+//                    }
+//                }
+//            }.frame(height: 100)
+//        }
         NavigationView {
             if remote.feedItems.isEmpty {
                 ActivityIndicator()
             } else {
+                
+//                List(remote.feedItems.first!.cellIdentifiers, id: \.self, selection: $selectedItem) {  v in
+//                    TileInfo(artworkViewModel: v)
+//                }
+                
                 CompositionalList1(remote.feedItems) { model, indexPath in
                     Group {
                         switch indexPath.section {
@@ -121,9 +127,14 @@ struct ContentView: View {
                         Spacer()
                     }
                     .padding()
+                }.onDetail { item in
+                    self.selectedItem = item
                 }
                 // step 4: provide a `UICollectionViewLayout`
                 .customLayout(.composed())
+                .sheet(item: $selectedItem) { item in
+                    ItunesFeedItemDetailView(viewModel: item)
+                }
             }
         }
         .onAppear {
@@ -151,10 +162,12 @@ public struct CompositionalList1<ViewModel: SectionIdentifierViewModel,
         
     public typealias Diff = DiffCollectionView1<ViewModel, RowView, HeaderFooterView>
 
+    public typealias SelectionProvider = ((ViewModel.CellIdentifier) -> Void)
     @Environment(\.layout) var customLayout
 
     var itemsPerSection: [ViewModel]
     let cellProvider: Diff.CellProvider
+    var selectionProvider: SelectionProvider?
 
     private (set)var headerProvider: Diff.HeaderFooterProvider? = nil
     
@@ -176,7 +189,8 @@ public struct CompositionalList1<ViewModel: SectionIdentifierViewModel,
         
         fileprivate let layout: UICollectionViewLayout
         fileprivate let headerProvider: Diff.HeaderFooterProvider?
-        
+        fileprivate let selectionProvider: SelectionProvider?
+
         init(_ list: CompositionalList1) {
 
             self.list = list
@@ -184,12 +198,14 @@ public struct CompositionalList1<ViewModel: SectionIdentifierViewModel,
             self.cellProvider = list.cellProvider
             self.headerProvider = list.headerProvider
             self.itemsPerSection = list.itemsPerSection
+            self.selectionProvider = list.selectionProvider
         }
         
         // Not used but kept for testing purposes
         public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             let sectionIdentifier = itemsPerSection[indexPath.section]
-            let _ = sectionIdentifier.cellIdentifiers[indexPath.item]
+            let model = sectionIdentifier.cellIdentifiers[indexPath.item]
+            selectionProvider?(model)
         }
     }
 }
@@ -215,6 +231,12 @@ extension CompositionalList1 {
     public func sectionHeader(_ header: @escaping Diff.HeaderFooterProvider) -> Self {
         var `self` = self
         `self`.headerProvider = header
+        return `self`
+    }
+    
+    public func onDetail(_ selectionProvider: SelectionProvider?) -> Self {
+        var `self` = self
+        `self`.selectionProvider = selectionProvider
         return `self`
     }
 }

@@ -26,59 +26,59 @@ public struct CompositionalList<ViewModel: SectionIdentifierViewModel,
 
     @Environment(\.layout) var customLayout
 
-    let itemsPerSection: [ViewModel]
-    var parent: UIViewController?
+    var itemsPerSection: [ViewModel]
     let cellProvider: Diff.CellProvider
-    
+
     private (set)var headerProvider: Diff.HeaderFooterProvider? = nil
     
-    public init(_ itemsPerSection: [ViewModel],
-         parent: UIViewController? = nil,
-         cellProvider: @escaping Diff.CellProvider) {
-        
-        self.itemsPerSection = itemsPerSection
-        self.parent = parent
+    public init(_ items: [ViewModel],
+                @ViewBuilder cellProvider: @escaping Diff.CellProvider) {
         self.cellProvider = cellProvider
+        self.itemsPerSection = items
     }
     
     public func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
     
-    public final class Coordinator: NSObject {
+    public final class Coordinator: NSObject, UICollectionViewDelegate {
     
         fileprivate let list: CompositionalList
-        fileprivate let itemsPerSection: [ViewModel]
+        fileprivate var itemsPerSection: [ViewModel]
         fileprivate let cellProvider: Diff.CellProvider
-        fileprivate var parent: UIViewController?
         
         fileprivate let layout: UICollectionViewLayout
         fileprivate let headerProvider: Diff.HeaderFooterProvider?
         
         init(_ list: CompositionalList) {
-            
+
             self.list = list
-            self.itemsPerSection = list.itemsPerSection
             self.layout = list.customLayout
             self.cellProvider = list.cellProvider
-            self.parent = list.parent
             self.headerProvider = list.headerProvider
+            self.itemsPerSection = list.itemsPerSection
+        }
+        
+        // Not used but kept for testing purposes
+        public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            let sectionIdentifier = itemsPerSection[indexPath.section]
+            let _ = sectionIdentifier.cellIdentifiers[indexPath.item]
         }
     }
 }
 
 @available(iOS 13, *)
-extension CompositionalList: UIViewRepresentable {
+extension CompositionalList: UIViewControllerRepresentable {
     
-    public func updateUIView(_ uiView: Diff, context: Context) {
-        uiView.applySnapshotWith(context.coordinator.itemsPerSection)
-    }
-    
-    public func makeUIView(context: Context) -> Diff {
+    public func makeUIViewController(context: Context) -> Diff {
         Diff(layout: context.coordinator.layout,
-             parent: context.coordinator.parent,
+             collectionViewDelegate: context.coordinator,
              context.coordinator.cellProvider,
              context.coordinator.headerProvider)
+    }
+    
+    public func updateUIViewController(_ uiViewController: Diff, context: Context) {
+        uiViewController.applySnapshotWith(context.coordinator.itemsPerSection)
     }
 }
 

@@ -13,8 +13,8 @@ struct CompositionalListExampleApp: App {
     
     var body: some Scene {
         WindowGroup {
-          //  ContentView()
-            Colle()
+            ContentView()
+           // Colle()
         }
     }
 }
