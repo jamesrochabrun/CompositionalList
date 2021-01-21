@@ -14,7 +14,9 @@ import UIKit
 /**
  - `ViewModel` must conform to `SectionIdentifierViewModel` `
  - `RowView` must conform to `View`, represents a cell.
- - `HeaderFooterView` must conform to `View`, represents a header or a footer/
+ - `HeaderFooterView` must conform to `View`, represents a header or a footer. Dev must provide a view to satisfy the generic parameter, if a header
+ is not needed return a `Spacer` with height of `0`
+ - `SelectionProvider` provides the view model associated with the selected cell. This is optional
  -
  */
 @available(iOS 13, *)
@@ -23,11 +25,13 @@ public struct CompositionalList<ViewModel: SectionIdentifierViewModel,
                          HeaderFooterView: View> {
         
     public typealias Diff = DiffCollectionView<ViewModel, RowView, HeaderFooterView>
+    public typealias SelectionProvider = ((ViewModel.CellIdentifier) -> Void)
 
     @Environment(\.layout) var customLayout
 
     var itemsPerSection: [ViewModel]
     let cellProvider: Diff.CellProvider
+    var selectionProvider: SelectionProvider?
 
     private (set)var headerProvider: Diff.HeaderFooterProvider? = nil
     
@@ -49,6 +53,7 @@ public struct CompositionalList<ViewModel: SectionIdentifierViewModel,
         
         fileprivate let layout: UICollectionViewLayout
         fileprivate let headerProvider: Diff.HeaderFooterProvider?
+        fileprivate let selectionProvider: SelectionProvider?
         
         init(_ list: CompositionalList) {
 
@@ -57,12 +62,13 @@ public struct CompositionalList<ViewModel: SectionIdentifierViewModel,
             self.cellProvider = list.cellProvider
             self.headerProvider = list.headerProvider
             self.itemsPerSection = list.itemsPerSection
+            self.selectionProvider = list.selectionProvider
         }
         
-        // Not used but kept for testing purposes
         public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             let sectionIdentifier = itemsPerSection[indexPath.section]
-            let _ = sectionIdentifier.cellIdentifiers[indexPath.item]
+            let model = sectionIdentifier.cellIdentifiers[indexPath.item]
+            selectionProvider?(model)
         }
     }
 }
@@ -88,6 +94,12 @@ extension CompositionalList {
     public func sectionHeader(_ header: @escaping Diff.HeaderFooterProvider) -> Self {
         var `self` = self
         `self`.headerProvider = header
+        return `self`
+    }
+    
+    public func selectedItem(_ selectionProvider: SelectionProvider?) -> Self {
+        var `self` = self
+        `self`.selectionProvider = selectionProvider
         return `self`
     }
 }

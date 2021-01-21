@@ -107,7 +107,7 @@ struct ContentView: View {
 //                    TileInfo(artworkViewModel: v)
 //                }
                 
-                CompositionalList1(remote.feedItems) { model, indexPath in
+                CompositionalList(remote.feedItems) { model, indexPath in
                     Group {
                         switch indexPath.section {
                         case 0, 2, 3:
