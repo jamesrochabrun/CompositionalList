@@ -30,7 +30,7 @@ struct Genre: Decodable {
     let url: String
 }
 
-class GenreViewModel: ObservableObject {
+public final class GenreViewModel: ObservableObject {
     
     @Published var genreId: String
     @Published var name: String
@@ -43,7 +43,7 @@ class GenreViewModel: ObservableObject {
     }
 }
 
-class FeedItemViewModel: IdentifiableHashable, ObservableObject {
+public final class FeedItemViewModel: IdentifiableHashable, ObservableObject {
     
     @Published public var artistName: String?
     @Published public var id: String

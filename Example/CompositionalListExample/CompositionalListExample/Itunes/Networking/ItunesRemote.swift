@@ -8,14 +8,15 @@
 import Foundation
 import Combine
 import CompositionalList
+import SwiftUI
 
-struct GenericSectionIdentifierViewModel<SectionIdentifier: Hashable, CellIdentifier: Hashable>: SectionIdentifierViewModel {
-    var sectionIdentifier: SectionIdentifier? = nil
-    var cellIdentifiers: [CellIdentifier]
+public struct GenericSectionIdentifierViewModel<SectionIdentifier: Hashable, CellIdentifier: Hashable>: SectionIdentifierViewModel {
+    public var sectionIdentifier: SectionIdentifier? = nil
+    public var cellIdentifiers: [CellIdentifier]
 }
 
 // Step 1: create a section identifier
-enum SectionIdentifierExample: String, CaseIterable {
+public enum SectionIdentifierExample: String, CaseIterable {
     case popular = "Popular"
     case new = "New"
     case top = "Top Items"

@@ -244,7 +244,7 @@ struct Itunes {
         return URLRequest(url: url)
     }
     
-    enum ItunesFeedKind: String {
+    enum ItunesFeedKind: String, CaseIterable {
         case music
         case apps
         case books
