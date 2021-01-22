@@ -13,7 +13,7 @@ struct CompositionalListExampleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Tab()
+            TabBar()
         }
     }
 }

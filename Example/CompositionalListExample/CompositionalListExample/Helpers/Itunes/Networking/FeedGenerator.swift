@@ -245,6 +245,7 @@ struct Itunes {
     }
     
     enum ItunesFeedKind: String, CaseIterable {
+        
         case music
         case apps
         case books
@@ -271,6 +272,18 @@ struct Itunes {
             case .tvShows: return "TV Shows"
             case .musicVideos: return "Music Videos"
             default: return rawValue.capitalized
+            }
+        }
+        
+        var imageSystemName: String {
+            switch self {
+            case .music: return "music.note.list"
+            case .apps: return "apps.iphone"
+            case .books: return "book"
+            case .tvShows: return "tv.circle"
+            case .movies: return "film"
+            case .podcast: return "dot.radiowaves.left.and.right"
+            case .musicVideos: return "tv.music.note.fill"
             }
         }
     }
