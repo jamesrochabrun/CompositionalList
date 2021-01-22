@@ -12,7 +12,7 @@ public extension UICollectionViewLayout {
     // Composed layout example.
     static func composed() -> UICollectionViewLayout {
         
-        let headers: Bool = false
+        let headers: Bool = true
         return UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
             let section: NSCollectionLayoutSection
             switch sectionIndex {

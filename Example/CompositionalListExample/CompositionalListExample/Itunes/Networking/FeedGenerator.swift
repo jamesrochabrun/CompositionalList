@@ -243,4 +243,35 @@ struct Itunes {
         let url = urlComponents.url! //want to crash if no information is complete
         return URLRequest(url: url)
     }
+    
+    enum ItunesFeedKind: String {
+        case music
+        case apps
+        case books
+        case tvShows
+        case movies
+        case podcast
+        case musicVideos
+        
+        init?(kind: String) {
+            switch kind {
+            case "song": self = .music // apple music || itunes music
+            case "iosSoftware": self = .apps
+            case "epubBook": self = .books
+            case "tvSeason": self = .tvShows
+            case "movie": self = .movies
+            case "podcast": self = .podcast
+            case "musicVideo": self = .musicVideos
+            default: return nil
+            }
+        }
+        
+        var title: String {
+            switch self {
+            case .tvShows: return "TV Shows"
+            case .musicVideos: return "Music Videos"
+            default: return rawValue.capitalized
+            }
+        }
+    }
 }

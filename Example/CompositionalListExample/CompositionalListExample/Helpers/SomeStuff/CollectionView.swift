@@ -90,8 +90,6 @@ class CollectionViewController<ViewModel: SectionIdentifierViewModel, RowView>: 
     
     private typealias DiffDataSource = UICollectionViewDiffableDataSource<ViewModel.SectionIdentifier, ViewModel.CellIdentifier>
     private var dataSource: DiffDataSource?
-//    private typealias Snapshot = NSDiffableDataSourceSnapshot<ViewModel.SectionIdentifier, ViewModel.CellIdentifier>
-//    private var currentSnapshot: Snapshot?
     private (set)var collectionView: UICollectionView!
 
     override func viewDidLoad() {
@@ -117,10 +115,6 @@ extension CollectionViewController {
 
     private func configureDataSource() {
 
-        // load initial data
-//        let snapshot : NSDiffableDataSourceSnapshot<ViewModel.SectionIdentifier, ViewModel.CellIdentifier> = snapshotForCurrentState()
-//        dataSource.apply(snapshot, animatingDifferences: false)
-        
         dataSource = DiffDataSource(collectionView: collectionView) { [unowned self] collectionView, indexPath, model in
             let cell: WrapperViewCell<RowView> = collectionView.dequeueReusableCell(forIndexPath: indexPath)
             cell.setupWith(self.content(indexPath, model), parent: self)
@@ -140,5 +134,64 @@ extension CollectionViewController {
         let snapshot : NSDiffableDataSourceSnapshot<ViewModel.SectionIdentifier, ViewModel.CellIdentifier> = snapshotForCurrentState()
         dataSource?.apply(snapshot)
         //dataSource?.apply(snapshot, animatingDifferences: true)
+    }
+}
+
+
+struct CollectionAlternative: View {
+    
+    @ObservedObject private var remote = ItunesRemote()
+
+    var body: some View {
+        VStack {
+            ScrollView (.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(SectionIdentifierExample.allCases, id: \.self) { app in
+                        Text(app.rawValue)
+                            .onTapGesture {
+                                switch app {
+                                case .comingSoon:
+                                    remote.fetchItems(.apps(feedType: .topFree(genre: .all), limit: 200))
+                                case .new:
+                                    remote.fetchItems(.tvShows(feedType: .topTVSeasons(genre: .all), limit: 100))
+                                default:
+                                    remote.fetchItems(.books(feedType: .topFree(genre: .all), limit: 100))
+                                }
+                            }
+                        Divider()
+                    }
+                }
+                HStack {
+                    List(remote.feedItems.first?.cellIdentifiers ?? [], id: \.id) { app in
+                        Text(app.kind)
+                        Divider()
+                    }
+                }
+            }.frame(height: 100)
+        }
+        NavigationView {
+            if remote.feedItems.isEmpty {
+                ActivityIndicator()
+            } else {
+                CollectionView(layout: .composed(), items: remote.feedItems) { indexPath, model in
+                    NavigationLink(destination: ItunesFeedItemDetailView(viewModel: model)) {
+                        Group {
+                            switch indexPath.section {
+                            case 0, 2, 3:
+                                TileInfo(artworkViewModel: model)
+                            case 1:
+                                ListItem(artworkViewModel: model)
+                            default:
+                                ArtWork(artworkViewModel: model)
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+        .onAppear() {
+            remote.fetchItems(.apps(feedType: .topFree(genre: .all), limit: 200))
+        }
     }
 }
