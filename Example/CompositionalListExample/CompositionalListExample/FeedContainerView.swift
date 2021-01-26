@@ -18,7 +18,8 @@ struct FeedContainerView: View {
     var body: some View {
         NavigationView {
             FeedView(items: $remote.feedItems, selectedItem: nil)
-            .navigationBarTitle(navigationBarTitle)
+                .ignoresSafeArea()
+                .navigationBarTitle(navigationBarTitle)
         }
         .onAppear {
             switch feedKind {
@@ -40,6 +41,7 @@ struct FeedContainerView: View {
         }
     }
 }
+
 struct FeedContainerView_Previews: PreviewProvider {
     static var previews: some View {
         FeedContainerView(feedKind: .apps)

@@ -47,7 +47,7 @@ struct TileInfo: View {
                 // .aspectRatio(CGSize(width: 100, height: 100), contentMode: .fill)
                 .cornerRadius(5.0)
             VStack(alignment: .leading, spacing: 3) {
-                Text(artworkViewModel.kind ?? artworkViewModel.name)
+                Text(artworkViewModel.artistName ?? artworkViewModel.name)
                     .modifier(PrimaryFootNote())
                 Text(artworkViewModel.genres.first?.name ?? "blob")
                     .modifier(SecondaryFootNote())
@@ -63,7 +63,7 @@ struct ListItem: View {
     var body: some View {
         HStack(spacing: 8) {
             ArtWork(artworkViewModel: artworkViewModel)
-                .frame(width: 40, height: 40)
+                .frame(width: 50, height: 50)
                 .clipped()
                .cornerRadius(3.0)
             VStack(alignment: .leading, spacing: 3) {
@@ -94,7 +94,7 @@ struct PrimaryFootNote: ViewModifier {
     func body(content: Content) -> some View {
         content
             .foregroundColor(.primary)
-            .font(.footnote)
+            .font(.callout)
             .lineLimit(1)
             .truncationMode(.tail)
     }

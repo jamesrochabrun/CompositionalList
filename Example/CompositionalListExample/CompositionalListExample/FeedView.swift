@@ -29,13 +29,7 @@ struct FeedView: View {
                     }
                 }
             }.sectionHeader { sectionIdentifier, kind, indexPath in
-                HStack {
-                    Text(sectionIdentifier?.rawValue ??  "")
-                        .bold()
-                        .font(.title)
-                    Spacer()
-                }
-                .padding()
+                TitleHeaderView(title: sectionIdentifier?.rawValue ?? "")
             }
             .selectedItem {
                 selectedItem = $0
@@ -47,6 +41,25 @@ struct FeedView: View {
         }
     }
 }
+
+struct TitleHeaderView: View {
+    
+    let title: String
+    var body: some View {
+        VStack {
+            HStack {
+                Text(title)
+                    .bold()
+                    .font(.title)
+                Spacer()
+            }
+            Divider()
+        }
+        .padding()
+    }
+}
+
+
 //
 //struct FeedView_Previews: PreviewProvider {
 //    static var previews: some View {

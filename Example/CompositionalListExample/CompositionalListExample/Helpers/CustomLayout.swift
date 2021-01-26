@@ -71,7 +71,7 @@ extension NSCollectionLayoutSection {
     }
     
     static func groupedList(rows: CGFloat = 4,
-                            itemHeight: CGFloat = 50,
+                            itemHeight: CGFloat = 60,
                             scrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .continuousGroupLeadingBoundary,
                             header: Bool = false,
                             footer: Bool = false) -> NSCollectionLayoutSection {
