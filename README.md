@@ -143,9 +143,9 @@ Group<_ConditionalContent<_ConditionalContent<TileInfo, ListItem>, ArtWork>>
 
 2. `HeaderFooterProvider` closure that provides the section identifier, the `kind` which can be `UICollectionView.elementKindSectionHeader` or `UICollectionView.elementKindSectionFooter` this will be defined by your layout, and the indexPath for the corresponding section. It expects a `View` as a return value, you can customize your return value based on the section or if it's a header or a footer. Same as `CellProvider` if a conditional statement is used make sure to wrap it in a `Group`. This closure is required even If you don't define headers or footers in your layout you still need to return a `View`, in that case, you can return a `Spacer` with a height of 0. (looking for a more elegant solution by now 🤷🏽‍♂️).
 
-3. `SelectionProvider` closure, internally uses `UICollectionViewDelegate` cell did select method to provide the selected item, this closure is optional.
+3. `SelectionProvider` closure, internally uses `UICollectionViewDelegate` cell did select method to provide the selected item, this closure is optional. 
 
-4. `customLayout` environment object, here you can return any kind of layout as long is a `UICollectionViewLayout`.
+4. `customLayout` environment object, here you can return any kind of layout as long is a `UICollectionViewLayout`. You can find the code for the layout [here](https://github.com/jamesrochabrun/CompositionalList/blob/main/Sources/CompositionalList/UIKit/Layout%2BUtils.swift). 😉
 
 5. For a reason that I still don't understand, we need to use a conditional statement verifying that the array is not empty, is handy for this case because we can return a spinner. 😬
 
@@ -157,6 +157,11 @@ Swift Package Manager (SwiftPM) is a tool for managing the distribution of Swift
 CompositionalList support SwiftPM from version 5.1.0. To use SwiftPM, you should use Xcode 11 to open your project. `Click File` -> `Swift Packages` -> `Add Package Dependency,` enter CompositionalList repo's [URL](https://github.com/jamesrochabrun/CompositionalList). Or you can login Xcode with your GitHub account and just type CompositionalList to search.
 
 After select the package, you can choose the dependency type (tagged version, branch or commit). Then Xcode will setup all the stuff for you.
+
+# How To Collaborate
+
+* This repo contains convenient Compositional Layout extension to compose different layouts, feel free to add more layouts!
+* Open a PR for any proposed change pointing it to `main` branch.
 
 ### DEMO
 
