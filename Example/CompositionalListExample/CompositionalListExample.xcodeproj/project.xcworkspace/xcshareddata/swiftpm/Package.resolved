@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/jamesrochabrun/CompositionalList",
         "state": {
           "branch": null,
-          "revision": "80a1357831e3d67b6416b0c4a8f69a660ba066b0",
-          "version": "1.0.3"
+          "revision": "d0fd87583ad102169f9eeaa84fce22bb7adc6023",
+          "version": "1.0.4"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
         "state": {
           "branch": null,
-          "revision": "564d238f8814c4a82502336fd80b28a9d321ff47",
-          "version": "5.10.2"
+          "revision": "4aaca57fb2f6dc5554a2228cf1d94289bd0a6c7d",
+          "version": "5.10.3"
         }
       },
       {
