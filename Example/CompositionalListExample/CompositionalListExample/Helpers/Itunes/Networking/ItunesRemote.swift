@@ -11,7 +11,7 @@ import CompositionalList
 import SwiftUI
 
 public struct GenericSectionIdentifierViewModel<SectionIdentifier: Hashable, CellIdentifier: Hashable>: SectionIdentifierViewModel {
-    public var sectionIdentifier: SectionIdentifier? = nil
+    public var sectionIdentifier: SectionIdentifier
     public var cellIdentifiers: [CellIdentifier]
 }
 
@@ -41,14 +41,12 @@ final class ItunesRemote: ObservableObject {
             for i in 0..<SectionIdentifierExample.allCases.count {
                 sectionIdentifiers.append(GenericSectionIdentifierViewModel(sectionIdentifier: SectionIdentifierExample.allCases[i], cellIdentifiers: chunks[i]))
             }
-            print("the kind old kind ItunesRemote \(String(describing: (self.feedItems.first?.cellIdentifiers.first)?.kind))")
             self.feedItems = sectionIdentifiers
-            print("the kind new kind ItunesRemote \(String(describing: (sectionIdentifiers.first?.cellIdentifiers.first)?.kind))")
          })
     }
 }
 
-// Helper, currenlt Itunes RSS feed does not return sectioned data, in order to
+// Helper, currently Itunes RSS feed does not return sectioned data, in order to
 // show how compositional list works with sections we chunked the available data from the Itunes API.
 extension Array {
     func chunked(into size: Int) -> [[Element]] {

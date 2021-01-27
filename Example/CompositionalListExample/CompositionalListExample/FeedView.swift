@@ -29,7 +29,7 @@ struct FeedView: View {
                     }
                 }
             }.sectionHeader { sectionIdentifier, kind, indexPath in
-                TitleHeaderView(title: sectionIdentifier?.rawValue ?? "")
+                TitleHeaderView(title: sectionIdentifier.rawValue)
             }
             .selectedItem {
                 selectedItem = $0
