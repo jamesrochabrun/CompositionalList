@@ -7,235 +7,94 @@
 
 import Foundation
 
+enum Format: String {
+    case json = ".json"
+    case xml = ".xml"
+    case atom = ".atom"
+}
+
 enum MediaType {
-    
-    case appleMusic(feedType: AppleMusicFeedType, limit: Int)
-    case itunesMusic(feedType: ItunesMusicFeedType, limit: Int)
-    case apps(feedType: AppsFeedType, limit: Int)
-    case audioBooks(feedType: AudioBooksFeedType, limit: Int)
-    case books(feedType: BooksFeedType, limit: Int)
-    case tvShows(feedType: TVShowFeedType, limit: Int)
-    case movies(feedType: MovieFeedType, limit: Int)
-    case podcast(feedType: PodcastFeedType, limit: Int)
-    case musicVideos(feedType: MusicVideoFeedType, limit: Int)
+
+    case apps(contentType: AppsContentType, chart: AppsChart, limit: Int, format: Format)
+    case audioBooks(contentType: AudioBooksContentType, chart: AudiobooksChart, limit: Int, format: Format)
+    case music(contentType: MusicContentType, chart: MusicChart, limit: Int, format: Format)
+    case books(contentType: BooksContentType, chart: BooksChart, limit: Int, format: Format)
+    case podcasts(contentType: PodcastsContentType, chart: PodcastsChart, limit: Int, format: Format)
     
     var path: String {
         switch self {
-        case .appleMusic(let feedType, let limit): return "/apple-music/\(feedType.path)/\(limit)/explicit.json"
-        case .itunesMusic(let feedType, let limit): return "/itunes-music/\(feedType.path)/\(limit)/explicit.json"
-        case .apps(let feedType, let limit): return "/ios-apps/\(feedType.path)/\(limit)/explicit.json"
-        case .audioBooks(let feedType, let limit): return "/audiobooks/\(feedType.path)/\(limit)/explicit.json"
-        case .books(let feedType, let limit): return "/books/\(feedType.path)/\(limit)/explicit.json"
-        case .tvShows(let feedType, let limit): return "/tv-shows/\(feedType.path)/\(limit)/explicit.json"
-        case .movies(let feedType, let limit): return "/movies/\(feedType.path)/\(limit)/explicit.json"
-        case .podcast(let feedType, let limit): return "/podcasts/\(feedType.path)/\(limit)/explicit.json"
-        case .musicVideos(let feedType, let limit): return "/music-videos/\(feedType.path)/\(limit)/explicit.json"
+        case .apps(let contentType, let chart, let limit, let format): return "/\(Itunes.ItunesMediaType.apps)/\(chart.rawValue)/\(limit)/\(contentType.rawValue)\(format.rawValue)"
+        case .audioBooks(let contentType, let chart, let limit, let format): return "/\(Itunes.ItunesMediaType.audioBooks.rawValue)/\(chart.rawValue)/\(limit)/\(contentType.rawValue)\(format.rawValue)"
+        case .music(let contentType, let chart, let limit, let format): return "/\(Itunes.ItunesMediaType.music.rawValue)/\(chart.rawValue)/\(limit)/\(contentType.rawValue)\(format.rawValue)"
+        case .books(let contentType, let chart, let limit, let format): return "/\(Itunes.ItunesMediaType.books.rawValue)/\(chart.rawValue)/\(limit)/\(contentType.rawValue)\(format.rawValue)"
+        case .podcasts(let contentType, let chart, let limit, let format): return "/\(Itunes.ItunesMediaType.podcasts.rawValue)/\(chart.rawValue)/\(limit)/\(contentType.rawValue)\(format.rawValue)"
+            
         }
     }
-}
-
-/// Apple Music
-enum AppleMusicFeedType {
-    case comingSoon(genre: AppleMusicGenreType)
-    case hotTracks(genre: AppleMusicGenreType)
-    case newReleases(genre: AppleMusicGenreType)
-    case topAlbums(genre: AppleMusicGenreType)
-    case topSongs(genre: AppleMusicGenreType)
-    
-    var path: String {
-        switch self {
-        case .comingSoon(let genre): return "coming-soon/\(genre.rawValue)"
-        case .hotTracks(let genre): return "hot-tracks/\(genre.rawValue)"
-        case .newReleases(let genre): return "new-releases/\(genre.rawValue)"
-        case .topAlbums(let genre): return "top-albums/\(genre.rawValue)"
-        case .topSongs(let genre): return "top-songs/\(genre.rawValue)"
-        }
-    }
-}
-
-enum AppleMusicGenreType: String {
-    case all
-    case country
-    case heavyMetal = "heavy-metal"
-}
-
-/// Itunes music
-enum ItunesMusicFeedType {
-    case hotTracks(genre: ItunesMusicGenreType)
-    case newMusic(genre: ItunesMusicGenreType)
-    case recentReleases(genre: ItunesMusicGenreType)
-    case topAlbums(genre: ItunesMusicGenreType)
-    case topSongs(genre: ItunesMusicGenreType)
-    
-    var path: String {
-        switch self {
-        case .hotTracks(let genre): return "hot-tracks/\(genre.rawValue)"
-        case .newMusic(let genre): return "new-music/\(genre.rawValue)"
-        case .recentReleases(let genre): return "recent-releases/\(genre.rawValue)"
-        case .topAlbums(let genre): return "top-albums/\(genre.rawValue)"
-        case .topSongs(let genre): return "top-songs/\(genre.rawValue)"
-        }
-    }
-}
-
-enum ItunesMusicGenreType: String {
-    case all
-    case country
-    case heavyMetal = "heavy-metal"
 }
 
 /// Apps
-enum AppsFeedType {
-    
-    case newAppsWeLove(genre: AppsGenreType)
-    case newGamesWeLove(genre: AppsGenreType)
-    case topFree(genre: AppsGenreType)
-    case topFreeiPad(genre: AppsGenreType)
-    case topGrossing(genre: AppsGenreType)
-    case topGrossingiPad(genre: AppsGenreType)
-    case topPaid(genre: AppsGenreType)
-    
-    var path: String {
-        switch self {
-        case .newAppsWeLove(let genre): return "new-apps-we-love/\(genre.rawValue)"
-        case .newGamesWeLove(let genre): return "new-games-we-love/\(genre.rawValue)"
-        case .topFree(let genre): return "top-free/\(genre.rawValue)"
-        case .topFreeiPad(let genre): return "top-free-ipad/\(genre.rawValue)"
-        case .topGrossing(let genre): return "top-grossing/\(genre.rawValue)"
-        case .topGrossingiPad(let genre): return "top-grossing-ipad/\(genre.rawValue)"
-        case .topPaid(let genre): return "top-paid/\(genre.rawValue)"
-        }
-    }
+enum AppsContentType: String {
+    case apps
 }
 
-enum AppsGenreType: String {
-    case all
-    case games
+enum AppsChart: String {
+    case topPaid = "top-paid"
+    case topFree = "top-free"
 }
 
 /// AudioBooks
-enum AudioBooksFeedType {
-    case top(genre: AudioBooksGenreType)
-    
-    var path: String {
-        switch self {
-        case .top(let genre): return "top-audiobooks/\(genre.rawValue)"
-        }
-    }
+enum AudioBooksContentType: String {
+    case audiobooks = "audio-books"
 }
 
-enum AudioBooksGenreType: String {
-    case all
+enum AudiobooksChart: String {
+    case top
 }
 
-/// Books
-enum BooksFeedType {
-    case topFree(genre: BooksGenreType)
-    case topPaid(genre: BooksGenreType)
-    
-    var path: String {
-        switch self {
-        case .topFree(let genre): return "top-free/\(genre.rawValue)"
-        case .topPaid(let genre): return "top-paid/\(genre.rawValue)"
-        }
-    }
+// Music
+enum MusicContentType: String {
+    case albums
+    case musicVideos = "music-videos"
+    case playlists
+    case songs
 }
 
-enum BooksGenreType: String {
-    case all
+enum MusicChart: String {
+    case mostPlayed = "most-played"
 }
 
-/// TV
-enum TVShowFeedType {
-    case topTVEpisodes(genre: TVShowGenreType)
-    case topTVSeasons(genre: TVShowGenreType)
-    
-    var path: String {
-        switch self {
-        case .topTVEpisodes(let genre): return "top-tv-episodes/\(genre.rawValue)"
-        case .topTVSeasons(let genre): return "top-tv-seasons/\(genre.rawValue)"
-        }
-    }
+// Books
+enum BooksContentType: String {
+    case books
 }
 
-enum TVShowGenreType: String {
-    case all
+enum BooksChart: String {
+    case topPaid = "top-paid"
+    case topFree = "top-free"
 }
 
-
-/// Movies
-enum MovieFeedType {
-    case top(genre: MovieGenreType)
-    
-    var path: String {
-        switch self {
-        case .top(let genre): return "top-movies/\(genre.rawValue)"
-        }
-    }
+// Podcats
+enum PodcastsContentType: String {
+    case episodes = "podcast-episodes"
+    case podcasts
 }
 
-enum MovieGenreType: String {
-    case all
+enum PodcastsChart: String {
+    case top
 }
-
-/// Itunes U
-enum ItunesUFeedType {
-    case top(genre: ItunesUGenreType)
-    
-    var path: String {
-        switch self {
-        case .top(let genre): return "top-itunes-u-courses/\(genre.rawValue)"
-        }
-    }
-}
-
-enum ItunesUGenreType: String {
-    case all
-}
-
-/// Podcasts
-enum PodcastFeedType {
-    case top(genre: PodcastGenreType)
-    
-    var path: String {
-        switch self {
-        case .top(let genre): return "top-podcasts/\(genre.rawValue)"
-        }
-    }
-}
-
-enum PodcastGenreType: String {
-    case all
-}
-
-
-/// Music Videos
-enum MusicVideoFeedType {
-    case top(genre: MusicVideGenreType)
-    
-    var path: String {
-        switch self {
-        case .top(let genre): return "top-music-videos/\(genre.rawValue)"
-        }
-    }
-}
-
-enum MusicVideGenreType: String {
-    case all
-}
-
 
 struct Itunes {
     
     private var base: String {
-        "https://rss.itunes.apple.com"
+        "https://rss.applemarketingtools.com"
     }
     
     var mediaTypePath: MediaType
     
     var urlComponents: URLComponents {
         var components = URLComponents(string: base)! //forceunwrapped becuase we know it exists
-        components.path = "/api/v1/us" + mediaTypePath.path
+        components.path = "/api/v2/us" + mediaTypePath.path
         return components
     }
     
@@ -244,33 +103,17 @@ struct Itunes {
         return URLRequest(url: url)
     }
     
-    enum ItunesFeedKind: String, CaseIterable {
+    enum ItunesMediaType: String, CaseIterable {
         
-        case music
         case apps
+        case music
+        case podcasts
         case books
-        case tvShows
-        case movies
-        case podcast
-        case musicVideos
-        
-        init?(kind: String) {
-            switch kind {
-            case "song": self = .music // apple music || itunes music
-            case "iosSoftware": self = .apps
-            case "epubBook": self = .books
-            case "tvSeason": self = .tvShows
-            case "movie": self = .movies
-            case "podcast": self = .podcast
-            case "musicVideo": self = .musicVideos
-            default: return nil
-            }
-        }
+        case audioBooks = "audio-books"
         
         var title: String {
             switch self {
-            case .tvShows: return "TV Shows"
-            case .musicVideos: return "Music Videos"
+            case .audioBooks: return "Audio Books"
             default: return rawValue.capitalized
             }
         }
@@ -280,10 +123,8 @@ struct Itunes {
             case .music: return "music.note.list"
             case .apps: return "apps.iphone"
             case .books: return "book"
-            case .tvShows: return "tv.circle"
-            case .movies: return "film"
-            case .podcast: return "dot.radiowaves.left.and.right"
-            case .musicVideos: return "tv.music.note.fill"
+            case .podcasts: return "dot.radiowaves.left.and.right"
+            case .audioBooks: return "tv.music.note.fill"
             }
         }
     }

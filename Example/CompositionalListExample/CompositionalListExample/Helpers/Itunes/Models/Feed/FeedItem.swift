@@ -25,9 +25,9 @@ struct FeedItem: Decodable {
 }
 
 struct Genre: Decodable {
-    let genreId: String
-    let name: String
-    let url: String
+    let genreId: String?
+    let name: String?
+    let url: String?
 }
 
 public final class GenreViewModel: ObservableObject {
@@ -37,9 +37,9 @@ public final class GenreViewModel: ObservableObject {
     @Published var url: String
     
     init(model: Genre) {
-        genreId = model.genreId
-        name = model.name
-        url = model.url
+        genreId = model.genreId ?? ""
+        name = model.name ?? ""
+        url = model.url ?? ""
     }
 }
 

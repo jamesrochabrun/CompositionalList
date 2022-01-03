@@ -9,11 +9,13 @@ import SwiftUI
 
 struct FeedContainerView: View {
     
-    @ObservedObject private var remote = ItunesRemote()
+    @StateObject private var remote = ItunesRemote()
+    
     var navigationBarTitle: Text {
-        Text(Itunes.ItunesFeedKind(kind: remote.feedItems.first?.cellIdentifiers.first?.kind ?? "")?.title ?? "Loading...")
+        Text(remote.feedItems.first?.cellIdentifiers.first?.kind.capitalized ?? "Loading...")
     }
-    var feedKind: Itunes.ItunesFeedKind
+    
+    var feedKind: Itunes.ItunesMediaType
     
     var body: some View {
         NavigationView {
@@ -23,20 +25,16 @@ struct FeedContainerView: View {
         }
         .onAppear {
             switch feedKind {
-            case .music:
-                remote.fetchItems(.appleMusic(feedType: .topSongs(genre: .all), limit: 200))
             case .apps:
-                remote.fetchItems(.apps(feedType: .topFree(genre: .all), limit: 200))
+                remote.fetchItems(.apps(contentType: .apps, chart: .topFree, limit: 100, format: .json))
             case .books:
-                remote.fetchItems(.books(feedType: .topFree(genre: .all), limit: 200))
-            case .tvShows:
-                remote.fetchItems(.tvShows(feedType: .topTVSeasons(genre: .all), limit: 200))
-            case .musicVideos:
-                remote.fetchItems(.musicVideos(feedType: .top(genre: .all), limit: 200))
-            case .movies:
-                remote.fetchItems(.movies(feedType: .top(genre: .all), limit: 200))
-            case .podcast:
-                remote.fetchItems(.podcast(feedType: .top(genre: .all), limit: 200))
+                remote.fetchItems(.books(contentType: .books, chart: .topFree, limit: 100, format: .json))
+            case .podcasts:
+                remote.fetchItems(.podcasts(contentType: .podcasts, chart: .top, limit: 100, format: .json))
+            case .audioBooks:
+                remote.fetchItems(.audioBooks(contentType: .audiobooks, chart: .top, limit: 100, format: .json))
+            case .music:
+                remote.fetchItems(.music(contentType: .albums, chart: .mostPlayed, limit: 100, format: .json))
             }
         }
     }

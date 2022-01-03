@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ItunesFeedItemDetailView: View {
     
-    @ObservedObject var viewModel: FeedItemViewModel
+    @StateObject var viewModel: FeedItemViewModel
     
     var body: some View {
         ArtWork(artworkViewModel: viewModel)

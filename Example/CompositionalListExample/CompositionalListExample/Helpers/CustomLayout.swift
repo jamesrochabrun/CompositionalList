@@ -146,7 +146,7 @@ public extension NSCollectionLayoutSection {
     
         let fourdGroup = NSCollectionLayoutGroup.mainContentBottomTrailingWith(itemInset, fraction: groupsFraction)
         
-        let fifthGroup = NSCollectionLayoutGroup.mainContentVerticalRectangle(itemInset, fraction: groupsFraction, rectanglePosition: .topTrailing)
+        let fifthGroup = NSCollectionLayoutGroup.mainContentVerticalRectangle(itemInset, fraction: groupsFraction, rectanglePosition: FlowDirection.topTrailing)
         
         /// FINAL GROUP
         let nestedSubGroups = [firstGroup, secondGroup, thirdGroup, fourdGroup, fifthGroup]

@@ -9,7 +9,7 @@ import Foundation
 
 public struct Author: Decodable {
     let name: String
-    let uri: String
+    var uri: String?
 }
 
 public protocol ItunesResource: Decodable {

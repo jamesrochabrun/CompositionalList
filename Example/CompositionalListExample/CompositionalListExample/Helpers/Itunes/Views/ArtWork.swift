@@ -10,7 +10,7 @@ import SDWebImageSwiftUI
 
 struct ArtWork: View {
     
-        @ObservedObject var artworkViewModel: FeedItemViewModel
+        @StateObject var artworkViewModel: FeedItemViewModel
 
         var body: some View {
             WebImage(url: artworkViewModel.artworkURL)
