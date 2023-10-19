@@ -10,7 +10,7 @@
 
 
 CompositionalList is a SwiftUI UIViewControllerRepresentable wrapper powered by UIKit DiffableDataSource and Compositional Layout. 🥸  
-It is customizable and flexible, supports multiple sections, cell selection. It allows to use any kind of SwiftUI view inside of cells, headers or footers.
+It is customizable and flexible and supports multiple sections and cell selection. It allows to use of any kind of SwiftUI view inside of cells, headers, or footers.
 
 # Requirements
 
@@ -51,7 +51,7 @@ struct CompositionalList<ViewModel, RowView, HeaderFooterView> where ViewModel :
 
 # How to use.
 
-`CompositionalList` is initialized with an array of data structures that conforms to `SectionIdentifierViewModel` which represents a section, this means it can have one or X number of sections.
+`CompositionalList` is initialized with an array of data structures that conform to `SectionIdentifierViewModel` which represents a section, this means it can have one or X number of sections.
 
 - **Step 1**, create a section identifier like this...
 
@@ -74,9 +74,9 @@ struct FeedSectionIdentifier: SectionIdentifierViewModel {
 }
 ```
 
-- **Step 3**, creating a section, this can be done inside a data provider view model that conforms to `ObservableObject`. 😉
+- **Step 3**, creating a section, can be done inside a data provider view model that conforms to `ObservableObject`. 😉
 
- _For simplicity, here we are creating a single section, for the full code in how to create multiple sections check the [example source code](https://github.com/jamesrochabrun/CompositionalList/tree/main/Example/CompositionalListExample)._ 
+ _For simplicity, here we are creating a single section, for the full code on how to create multiple sections check the [example source code](https://github.com/jamesrochabrun/CompositionalList/tree/main/Example/CompositionalListExample)._ 
 
 ```swift
 struct Remote: ObservableObject {
@@ -143,7 +143,7 @@ Group<_ConditionalContent<_ConditionalContent<TileInfo, ListItem>, ArtWork>>
 
 2. `HeaderFooterProvider` closure that provides the section identifier, the `kind` which can be `UICollectionView.elementKindSectionHeader` or `UICollectionView.elementKindSectionFooter` this will be defined by your layout, and the indexPath for the corresponding section. It expects a `View` as a return value, you can customize your return value based on the section or if it's a header or a footer. Same as `CellProvider` if a conditional statement is used make sure to wrap it in a `Group`. This closure is required even If you don't define headers or footers in your layout you still need to return a `View`, in that case, you can return a `Spacer` with a height of 0. (looking for a more elegant solution by now 🤷🏽‍♂️).
 
-3. `SelectionProvider` closure, internally uses `UICollectionViewDelegate` cell did select method to provide the selected item, this closure is optional. 
+3. `SelectionProvider` closure, internally uses `UICollectionViewDelegate` cell did select a method to provide the selected item, this closure is optional. 
 
 4. `customLayout` environment object, here you can return any kind of layout as long is a `UICollectionViewLayout`. You can find the code for the layout [here](https://github.com/jamesrochabrun/CompositionalList/blob/main/Sources/CompositionalList/UIKit/Layout%2BUtils.swift). 😉
 
@@ -154,13 +154,13 @@ Group<_ConditionalContent<_ConditionalContent<TileInfo, ListItem>, ArtWork>>
 Installation with Swift Package Manager (Xcode 11+)
 Swift Package Manager (SwiftPM) is a tool for managing the distribution of Swift code as well as C-family dependency. From Xcode 11, SwiftPM got natively integrated with Xcode.
 
-CompositionalList support SwiftPM from version 5.1.0. To use SwiftPM, you should use Xcode 11 to open your project. `Click File` -> `Swift Packages` -> `Add Package Dependency,` enter CompositionalList repo's [URL](https://github.com/jamesrochabrun/CompositionalList). Or you can login Xcode with your GitHub account and just type CompositionalList to search.
+CompositionalList supports SwiftPM from version 5.1.0. To use SwiftPM, you should use Xcode 11 to open your project. `Click File` -> `Swift Packages` -> `Add Package Dependency,` enter CompositionalList repo's [URL](https://github.com/jamesrochabrun/CompositionalList). Or you can log in to Xcode with your GitHub account and just type CompositionalList to search.
 
-After select the package, you can choose the dependency type (tagged version, branch or commit). Then Xcode will setup all the stuff for you.
+After selecting the package, you can choose the dependency type (tagged version, branch, or commit). Then Xcode will set up all the stuff for you.
 
 # How To Collaborate
 
-* This repo contains convenient Compositional Layout extension to compose different layouts, feel free to add more layouts!
+* This repo contains a convenient Compositional Layout extension to compose different layouts, feel free to add more layouts!
 * Open a PR for any proposed change pointing it to `main` branch.
 
 ### DEMO
